@@ -1,0 +1,184 @@
+\documentclass[a4paper,twoside]{iiththesis}
+
+\usepackage{graphicx}
+\book{Thesis}
+\title{--Title of my thesis--}
+\degree{Master of Technology}
+\department{Chemical Engineering}
+\submitted{June 2011}
+\author{-- Student Name --}
+\adviser{--------------}
+\addradviser{Dept. of Chem Eng \\ IITH}
+\chair{---------}
+\addrchair{Dept. of Mech Eng \\ IITH}
+\external{----------}
+\addrexternal{Dept. of Chem Eng \\ IITM}
+\internal{----------}
+\addrinternal{Dept. Math \\ IITH}
+\coguide{----------}
+\addrcoguide{Dept. of Chem Eng \\ IITH}
+\abstract{
+This is not a  document on how to use latex. It rather explains how to use iiththesis.cls file to write your
+thesis for PhD/M.Tech/MSc. This file is generated using the class iiththesis.cls. This document draws a broad picture of the structure and formatting of your thesis. 
+}
+\acknowledgements{.}
+\dedication{.}
+
+
+\renewcommand{\bibname}{References}
+\begin{document}
+
+
+\chapter{Using iiththesis}
+\section{Front matter}
+iiththesis is a class file that defines the structure of the thesis. In order to use the file you have to define the
+document class as follows
+\begin{verbatim}
+\documentclass{iiththesis}
+\end{verbatim}
+The student need not to worry about the structure of the front matter. The class file takes the following information to generate the front matter
+\begin{itemize}
+\item Title
+\item Degree
+\item Book
+\item Department
+\item Submission date
+\item Author
+\item Chairman (optional)
+\item External examiner (optional)
+\item Internal examiner  (optional)
+\item Adviser
+\item Co-adviser (optional)
+\item Acknowledgment (optional)
+\item Dedication (optional)
+
+\end{itemize}
+\subsection{Title}
+$ \backslash $title\{tile of the thesis\} will generate the tile of your thesis.
+
+\subsection{Degree}
+Use $ \backslash $degree\{Master of Technology\} to input your degree.
+
+\subsection{Book}
+Use $ \backslash $book\{\} to input nature of report. For PhD ``Dissertation" is recommended and
+for M.Tech ``Thesis" is recommended.
+
+\subsection{Department}
+Use $ \backslash $department\{Your department\} to input your department name.
+
+\subsection{Submission date}
+Use $ \backslash $submitted\{June 2011\} to input date of submission.
+
+
+\subsection{Author}
+Use $ \backslash $author\{Student name\} to input the author name.
+
+\subsection{Committee members}
+The committee members consists of chairman, adviser, and examiners.  Use the following commands to include the committee members
+\begin{itemize}
+\item $ \backslash $adviser\{Your adviser\}
+\item $ \backslash $chair\{Committee chairman\}
+\item $ \backslash $external\{External examiner \}
+\item $ \backslash $internal\{Internal examiner \}
+\item $ \backslash $coguide\{Co-Adviser\}
+
+\end{itemize}
+
+The affiliation of each examiner can be provided using the following environments
+\begin{itemize}
+\item $ \backslash $addradviser\{Address line 1 $ \backslash \backslash $ Address line 2\}
+\item $ \backslash $addrchair\{Address line 1 $ \backslash \backslash $ Address line 2\}
+\item $ \backslash $addrexternal\{Address line 1 $ \backslash \backslash $ Address line 2 \}
+\item $ \backslash $addrinternal\{Address line 1 $ \backslash \backslash $ Address line 2 \}
+\item $ \backslash $addrcoguide\{Address line 1 $ \backslash \backslash $ Address line 2\}
+
+\end{itemize}
+
+
+\subsection{Acknowledgments}
+This is optional. Use the acknowledgment environment $ \backslash $acknowledgments\{\}   to create the acknowledgement.
+You may write your acknowledgment in an external file, and that can be incorporated into the main tex file using the $ \backslash $input\{filename\}.
+
+
+\subsection{Dedication}
+This is optional. Use the dedication environment $ \backslash $dedication\{\}   to create the acknowledgement.
+You may write your dedication in an external file, and that can be incorporated into the main tex file using the $ \backslash $input\{filename\}.
+
+\section{Where to put the above environments}
+All the above mentioned environments must be defined before starting the document. i.e. before the environment
+ $ \backslash $begin\{document\}.
+
+\chapter{Citation}
+\section{Single citation}
+The cite command can be used to create any reference~\cite{Achenbach1995}. i.e. 
+\begin{verbatim}
+\cite{bibtex_key}
+\end{verbatim}
+
+
+\section{Multiple citation}
+You can also cite multiple references using the cite option~\cite{Achenbach1995,Aguiar2004}.. i.e
+\begin{verbatim}
+\cite{bibtex_key1, bibtex_key2}
+\end{verbatim}
+
+Books and Thesis may be cited in the same way~\cite{Bard2001,Iordanidis2002}. The student need not to worry about difference in citation style for journal article, conference, books, thesis etc. This is taken care by bibliography style-file iiththesis.bbl. You are strongly recommended to use $ \backslash $ bibliography{•} rather than individual bibtex entries. By using $ \backslash $bibliography{•} you will never have references which are not cited in the text. You can use any reference manager to create your collection of bibliography.bib. For instance JabRef and Mendeley are reference managers which are freely available.
+
+\chapter{Figures}
+\section{Referencing figures}
+The figure where ever possible must be centered. Each figure must have a caption centered to the figure. Every single figure in the document must be referred in the text. For example IITH logo is displayed in Fig.~\ref{iithlogo}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{logo}
+\caption{This is IITH logo}
+\label{iithlogo}
+\end{figure}
+
+Use ``Fig". to refer to a figure if the reference to it appears not at the beginning of a sentence. If the sentence starts with reference to figure use ``Figure". For instance refer to the following text.
+Figure~\ref{iithlogo} is a compressed logo of IITH.\\
+
+\section{File formats}
+You can use jpeg, png, pdf, or eps file format for the figures. However, depending on the file type you will have to use either \textit{pdflatex} or \textit{latex}. Please refer to Chp.~\ref{compiling} for further details.
+
+
+\chapter{Tables}
+
+\section{Referencing tables}
+The tables where ever possible must be centered. The table caption must appear at the top of the table and must be centered to the table. Every table in the document must be referred in the text. Please use capitalized ``T" whenever a reference to table is made. i.e Table~\ref{extable} rather than table~\ref{extable}.
+\begin{table}[h]
+\centering
+\caption{This is an example table.}
+\begin{tabular}{l l}
+\hline
+Parameter & Value \\
+\hline
+Density & 1 \\
+Specific heat & 1 \\
+\hline
+\end{tabular}
+\label{extable}
+\end{table}
+
+\chapter{Compiling the \textit{.tex} file }
+\label{compiling}
+
+\section{Options}
+If you are using jpeg or pdf format for the figures please use\textit{pdflatex} to compile the tex file. If you are using eps format you can use \textit{latex} command to compile the tex file. The \textit{latex} command will create \textit{dvi} output which may be converted to \textit{pdf} by using \textit{dvipdf} on any linux distribution. 
+
+\section{Compilation sequence}
+You have to execute the following sequence to commands to get the proper output file.
+\begin{verbatim}
+latex thesis.tex
+bibtex thesis
+latex thesis.tex
+latex thesis.tex
+\end{verbatim}
+Notice that you have to tex the document twice after running bibtex.\\
+
+\clearpage
+\newpage
+\addcontentsline{toc}{chapter}{References} % Please do not remove this
+\bibliographystyle{iiththesis}
+\bibliography{references}
+\end{document}
