@@ -18,8 +18,13 @@
 \ProvidesClass{iiththesis}
          [2011/06/16 v1.2 IIT Hyderabad Thesis class]
 \RequirePackage{setspace}
-\RequirePackage[dvips]{graphics}
+% dvips engine is not compatible and would result
+% in logo rendering via tikzpicture being ignored
+% what the heck dvips here doing anyway for pdftex?
+%\RequirePackage[dvips]{graphics}
 \RequirePackage{array}
+\RequirePackage{tikz}
+\RequirePackage{ifxetex}
 % the next two lines are needed to make packages using xcolor happy
 \RequirePackage{xcolor}
 \def\current@color{ Black}
@@ -86,9 +91,9 @@
   \vspace*{0in}
   \begin{center}
   \bf
-    \LARGE \@title
+	  {\LARGE \@title}
   \end{center}
-  \normalsize
+%  \normalsize
 \normalfont
   \vspace{.3in}
   \begin{center}
@@ -103,7 +108,31 @@ Indian Institute of Technology Hyderabad \\
   \end{center}
     \vspace{.3in}
   \begin{center}
-  \includegraphics{logo}
+%  \includegraphics{logo}
+\definecolor{circleorange}{rgb}{1,0.17,0.08}
+\definecolor{darkorange}{rgb}{1,0.27,0.1}
+\definecolor{orange2}{rgb}{1,0.5,0.15}
+\definecolor{orange3}{rgb}{1,0.65,0.25}
+\definecolor{yellow1}{rgb}{0.95,0.77,0.2}
+\begin{tikzpicture}[scale=0.25,every node/.style={transform shape}]
+\draw [fill=circleorange,circleorange] (5,10) circle (1.15); 
+\fill [darkorange] (5.06,8) -- (5.06,2) -- (7.3,1.2) -- (7.3,8.8) -- (5.06,8);
+\fill [darkorange] (4.94,8) -- (4.94,2) -- (2.7,1.2) -- (2.7,8.8) -- (4.94,8);
+\fill [orange2]    (7.4,8.4) -- (7.4,1.6) -- (8.2,1.2) -- (8.2,8.8) -- (7.4,8.4);
+\fill [orange2]    (2.6,8.4) -- (2.6,1.6) -- (1.8,1.2) -- (1.8,8.8) -- (2.6,8.4);
+\fill [orange3]    (8.3,8.4) -- (8.3,1.6) -- (9.0,1.2) -- (9.0,8.8) -- (8.3,8.4);
+\fill [orange3]    (1.7,8.4) -- (1.7,1.6) -- (1.0,1.2) -- (1.0,8.8) -- (1.7,8.4);
+\fill [yellow1]    (9.1,8.4) -- (9.1,1.6) -- (9.7,1.2) -- (9.7,8.8) -- (9.1,8.4);
+\fill [yellow1]    (0.9,8.4) -- (0.9,1.6) -- (0.3,1.2) -- (0.3,8.8) -- (0.9,8.4);
+\ifxetex
+\node [scale=2.1] at (5,-0.1)  {   {\bf {\nakulafont  भारतीय प्रौद्योगिकी संस्थान हैदराबाद }} };
+\node [scale=1.8] at (5,-1.2) {   {\bf {\liberationsansfont Indian Institute of Technology Hyderabad}} };
+\renewcommand\rmdefault{lmr}
+\renewcommand\sfdefault{lmss}
+\renewcommand\ttdefault{lmtt}
+\fi
+\end{tikzpicture}
+
   \end{center}
   \vspace{.3in}
   \begin{center}
@@ -141,9 +170,9 @@ Indian Institute of Technology Hyderabad \\
    \addcontentsline{toc}{section}{Declaration}
   \begin{center}
   \bf
-  \Large Declaration 
+	  {\Large Declaration}
   \end{center}
-  \normalsize
+  %\normalsize
 \onehalfspacing
 I declare that this written submission represents my ideas in my own words, and where ideas or words of others have been included, I have adequately cited and referenced the original sources. I also declare that I have adhered to all principles of academic honesty and integrity and have not misrepresented or fabricated or falsified any idea/data/fact/source in my submission. I understand that any violation of the above will be a cause for disciplinary action by the Institute and can also evoke penal action from the sources that  have thus not been properly cited, or from whom proper permission has not been taken when needed.
 
@@ -170,9 +199,9 @@ I declare that this written submission represents my ideas in my own words, and 
    \addcontentsline{toc}{section}{Approval Sheet}
   \begin{center}
   \bf
-  \Large Approval Sheet 
+	  {\Large Approval Sheet}
   \end{center}
-  \normalsize
+%  \normalsize
   
   
  %% Guide
@@ -294,6 +323,20 @@ I declare that this written submission represents my ideas in my own words, and 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
 \ProcessOptions
 \LoadClass{report}
+% --sbjoshi : DO NOT Change the following
+% Putting this before \LoadClass results in
+% a known error regardong \normalsize not defined
+% Another fix is to commentout \normalsize part in
+% fontspec-xetex.sty but can't ask all the users to do that
+\ifxetex
+\RequirePackage{fix-cm}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{fontspec}
+\newfontfamily\nakulafont[Script=Devanagari,AutoFakeBold=2]{Nakula}
+\newfontfamily\liberationfont{Liberation Sans Narrow}
+\newfontfamily\liberationsansfont{Liberation Sans}
+\fi
+% -- sbjoshi end
 
 \setlength{\oddsidemargin}{0.25in} 
 \setlength{\evensidemargin}{0.25in}
