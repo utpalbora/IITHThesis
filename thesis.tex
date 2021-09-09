@@ -1,37 +1,53 @@
-\documentclass{iiththesis}
-\book{Thesis}
-\title{--Title of my thesis--}
-\degree{Doctor of Philosophy}
-\department{Computer Science and Engineering}
+%\documentclass{iiththesis}
+\documentclass[lof,lot,loa,department=cse,degree=phd,backref=page]{iiththesis}
+
+\title{Title of your dissertation}
 \submitted{\today}
-\author{-- Student Name --}
-\adviser{--------------}
-\addradviser{Dept. of Computer Science and Engineering \\ IITH}
-%\chair{---------}
-%\addrchair{Dept. of Mech Eng \\ IITH}
-%\external{----------}
-%\addrexternal{Dept. of Chem Eng \\ IITM}
-%\internal{----------}
-%\addrinternal{Dept. Math \\ IITH}
-%\coguide{----------}
-%\addrcoguide{Dept. of Chem Eng \\ IITH}
+\author{Author Name}
+\rollno{IITH roll no}
+\adviser{Adviser}
+\addradviser{Dept. of \department \\ \iithfull}
+\coguide{Co-Adviser}
+\addrcoguide{Dept. of \department \\ \iithfull}
+\chair{Prof. Examiner}
+\addrchair{Dept. of Some Eng \\ IIT}
+\external{Prof. External}
+\addrexternal{Dept. of Some Eng \\ IIT}
+\internal{Prof. Internal}
+\addrinternal{Dept. Some Eng \\ IIT}
 
 
-\input{acknowledgments/acks}
-\dedication{.}
-\input{abstract/abstract}
+\usepackage{import}
+\import{common/}{preamble}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Include specific chapters while preserving the chapter number.
+%% Abstract must always be added.
+\includeonly{
+  acknowledgments/acks,
+  dedication/dedication,
+  abstract/abstract,
+  intro-chapter/introduction,
+  chapter-1/chapter-1,
+  conclusion-chapter/conclusion
+}
+
+\include{acknowledgments/acks}
+\include{dedication/dedication}
+\include{abstract/abstract}
 
 \renewcommand{\bibname}{References}
 \begin{document}
-
-\input{intro-chapter/introduction}
-\input{chapter-1/chapter-1}
-\input{chapter-2/chapter-2}
-\input{conclusion-chapter/conclusion}
+\include{intro-chapter/introduction}
+\include{chapter-1/chapter-1}
+\include{conclusion-chapter/conclusion}
 
 \clearpage
 \newpage
-\addcontentsline{toc}{chapter}{References} % Please do not remove this
+\phantomsection\addcontentsline{toc}{chapter}{References} % Please do not remove this
 \bibliographystyle{iiththesis}
-\bibliography{references}
+\bibliography{common/references}
+
+\printindex
 \end{document}

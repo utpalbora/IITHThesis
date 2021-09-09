@@ -1,49 +1,111 @@
-%\usepackage[x11names]{xcolor}
-%\usepackage[table]{xcolor}
-%\usepackage[table]{xcolor}
-\usepackage{multirow}
-\usepackage{booktabs}
-\usepackage{listings}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{arydshln}
-\usepackage{mathtools}
-%algorithmic, algorithm2e, algorithmicx, and program
-%\usepackage{algorithm2e}
-\usepackage[noend,ruled,linesnumbered]{algorithm2e}
-%\usepackage[linesnumbered,lined,boxed,commentsnumbered]{algorithm2e}
 \usepackage{xifthen}
 \usepackage{xspace}
-\usepackage{textcomp}
-\usepackage{caption}
-\usepackage[flushleft]{threeparttable}
-\captionsetup[table]{position=bottom}
+\usepackage[table]{xcolor}
+\usepackage{import} %% support relative input
+\usepackage{amssymb} %% Popular math symbols
+\usepackage{amsfonts} %% Extra math symbols and fonts
+\usepackage{amsmath,array,booktabs,caption,fancyvrb,graphicx,tabularx}
+%% acmart already includes amsmath,array,booktabs,caption,fancyvrb,graphicx,hypdoc,libertine,longtable,newtxmath,tabularx,zi4,
+\usepackage{mathtools} %% Extension to amsmath
+\captionsetup[table]{position=top}
+\captionsetup[figure]{position=bottom}
+\usepackage{multirow} %% Cell spanning multiple rows
+\usepackage{arydshln} %% Draw dash-lines in array/tabular
+%\usepackage[flushleft]{threeparttable} %% table with footnote, not a float
+\usepackage{listings} %% Code listings
+\usepackage{textcomp} %% Required by upquote
+\captionsetup[lstlisting]{position=bottom}
+
+\usepackage{enumitem} %% Layout for enumerate, itemize, and description
+\usepackage[normalem]{ulem} %% Custom undeline and strikeout
+%\usepackage{hyperref} %% Support navigation with hypertext links
+
+%% Provides algorithm and algorithmic environments
+%% Here algorithm is a float, algorithmic is environment for writing algo
+%% Use them with IEEETran
+\usepackage{algorithm,algpseudocode}
+%% algorithm2e provides algorithm environment
+%% Here algorithm is a float as well as environment for writing algo
+%\usepackage[ruled,linesnumbered]{algorithm2e}
+
+%% Draw and plot using tikz and pgfplots
 \usepackage{pgfplots}
-\usepackage{subfig}
-\usepackage{import}
-\usepackage{enumerate}
-%\usepackage{subcaption}
+\usepackage{pgfplotstable}
+\usetikzlibrary{arrows.meta}
+%\usetikzlibrary{graphdrawing} %% LuaLaTeX is needed
+\usetikzlibrary{graphs}
 \usetikzlibrary{patterns}
+\usetikzlibrary{positioning}
+%\usegdlibrary{trees}
 \pgfplotsset{width=10cm,compat=1.14}
+\pgfplotsset{xticklabel={\tick},scaled x ticks=false}
+\pgfplotsset{plot coordinates/math parser=false}
 
-\usepackage[toc,page]{appendix}
+%% Watermark, comment out for final draft
+\usepackage{draftwatermark}
+\SetWatermarkText{Unpublished Working Draft \\ Do Not Share.}
+\SetWatermarkScale{.5}
+\SetWatermarkAngle{45}
+\SetWatermarkColor[gray]{0.9}
+%\SetWatermarkColor[rgb]{0.7,0,0}
+\SetWatermarkFontSize{2cm}
+%% Watermark end
 
+\usepackage{float}
+%\restylefloat{table}
+%\usepackage{stfloats} %% better positioning of floats in 2-column documents
+%\usepackage{subcaption} %% captions for subfigures
+\usepackage{subfig} %% does not work properly with hyperref, prefer subcaption
+
+%% Uncomment for IEEETran
+%\newtheorem{definition}{Definition}
+%\usepackage{cite}
+
+%% appendix with toc support
+%% Provides appendix command and appendices environment
+\usepackage[titletoc,toc,page,header]{appendix}
+
+%% Custom commands for referencing
 \import{}{refs.tex}
+
+%% Review comment commands
+\colorlet{sjcolor}{blue}
 \colorlet{ubcolor}{teal}
+\colorlet{urkcolor}{red}
+\newcommand{\sjcomment}[1]{\textcolor{sjcolor}{SJ:#1}}
 \newcommand{\ubcomment}[1]{\textcolor{ubcolor}{UB:#1}}
+\newcommand{\urkcomment}[1]{\textcolor{urkcolor}{URK:#1}}
+\newcommand{\fixme}[2][]{\textcolor{red}{\textbf{ToDo:}\ifthenelse{\isempty{#1}{}}{}{#1--}#2}}
+\newcommand\redsout{\bgroup\markoverwith{\textcolor{orange}{\rule[0.5ex]{2pt}{1pt}}}\ULon} %needs ulem
+\newcommand{\suggest}[2]{\redsout{#2}\textcolor{orange}{\textit{#1}}}
+%% Review comment commands end
+
+%% Custom commands
+\newcommand{\ie}{{\em i.e.,}\xspace}
+\newcommand{\etal}{{\em et al.}\xspace}
+\newcommand{\tool}[1]{{\sc {#1}}\xspace}
 \newcommand{\Omit}[1]{}
 \newcommand{\EM}[1]{{\em #1}}
 \newcommand{\BF}[1]{{\bf #1}}
 \newcommand{\TT}[1]{{\tt #1}}
 \newcommand{\IT}[1]{{\it #1}}
-\newcommand{\fixme}[2][]{\textcolor{red}{\textbf{FIXME:}\ifthenelse{\isempty{#1}{}}{}{#1--}#2}}
-\newcommand\redsout{\bgroup\markoverwith{\textcolor{orange}{\rule[0.5ex]{2pt}{1pt}}}\ULon}
-\newcommand{\suggest}[2]{\redsout{#2}\textcolor{orange}{\textit{#1}}}
+\newcommand{\inangleb}[1]{\ensuremath{\langle#1\rangle}}
+\newcommand{\insquareb}[1]{\ensuremath{[#1]}}
+\newcommand{\toolname}{{\sc LLOV}\xspace}
+\newcommand{\tsan}{\tool{ThreadSanitizer}\xspace}
+\newcommand{\drd}{\tool{Valgrind DRD}\xspace}
+\newcommand{\helgrind}{\tool{Helgrind}\xspace}
+\newcommand{\llovmhp}{{\sc LLOV (with MHP \& Polly)}\xspace}
+\newcommand{\llovpolly}{{\sc LLOV (with Polly)}\xspace}
+\newcommand{\llovmhponly}{{\sc LLOV (with MHP)}\xspace}
+\newcommand{\tg}{\tool{TaskGraph}\xspace}
+\newtheorem{definition}{Definition}
 
-
-%  Zapf Chancer character
+%%  Zapf Chancer character
 \DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Listing styles
 \definecolor{mGreen}{rgb}{0,0.6,0}
 \definecolor{mGray}{rgb}{0.5,0.5,0.5}
 \definecolor{mPurple}{rgb}{0.58,0,0.82}
@@ -157,8 +219,8 @@
     nocapture, byval, nest, readnone, readonly, noalias, uwtable,
     inlinehint, noinline, alwaysinline, optsize, ssp, sspreq,
     noredzone, noimplicitfloat, naked, alignstack,
-    module, asm, align, tail, to, 
-    addrspace, section, alias, sideeffect, c, gc, 
+    module, asm, align, tail, to,
+    addrspace, section, alias, sideeffect, c, gc,
     target, datalayout, triple,
     blockaddress
     blockaddress

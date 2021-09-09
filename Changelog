@@ -1,0 +1,7 @@
+v1.3:
+* Predefined department, degree, and document type.
+  iiththesis.cls now supports key-value pair options for
+  department, degree, and document-type (book).
+* clickable citations with hyperref
+* added indexing support
+* IITH Logo using Tikz by sbjoshi
