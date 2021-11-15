@@ -13,8 +13,15 @@
 \usepackage{arydshln} %% Draw dash-lines in array/tabular
 %\usepackage[flushleft]{threeparttable} %% table with footnote, not a float
 \usepackage{listings} %% Code listings
+\renewcommand{\lstlistlistingname}{List of Listings}
 \usepackage{textcomp} %% Required by upquote
-\captionsetup[lstlisting]{position=bottom}
+\captionsetup[lstlisting]{position=bottom,singlelinecheck=false,justification=justified}
+\usepackage[scaled=.9]{sourcecodepro} %% change typewritter font to sourcecodepro
+%% \renewcommand\ttdefault{sourcecodepro} %% sourcecodepro sets it by default
+%% \rmdefault %% Roman or Serif
+%% \sfdefault %% Sans Serif
+%% \ttdefault %% Set default Monospaced font (Typewriter)
+%% \familydefault %% Set default font in the body of TeX documents. Default is Roman
 
 \usepackage{enumitem} %% Layout for enumerate, itemize, and description
 \usepackage[normalem]{ulem} %% Custom undeline and strikeout
@@ -112,90 +119,107 @@
 \definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
 
 \lstdefinestyle{CStyle}{
-    %backgroundcolor=\color{backgroundColour},
-    commentstyle=\color{mGreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{mGray},
-    stringstyle=\color{mPurple},
-    basicstyle=\scriptsize,
-    breakatwhitespace=false,
-    breaklines=true,
-    captionpos=b,
-    keepspaces=true,
-    numbers=left,
-    numbersep=5pt,
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
-    tabsize=2,
-    language=C++
+%  backgroundcolor=\color{backgroundColour},
+  commentstyle=\color{mGreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{mGray},
+  stringstyle=\color{mPurple},
+%  identifierstyle=\color{blue},
+  morekeywords={
+    pragma, omp, parallel, workshare,
+    sections, section, single, barrier,
+    master, critical, atomic, simd,
+    device, shared, private, copyprivate,
+    firstprivate, lastprivate, public,
+    threadprivate, reduction, ordered,
+    dynamic, runtime, guided, monotonic,
+    nonmonotonic, target, distribute,
+    num_threads, default, copyin, copyprivate,
+    nowait, collapse, schedule, linear,
+    aligned, safelen, simdlen, declare,
+    task, taskloop, taskgroup, taskwait,
+    final, untied, mergeable, depend,
+    grainsize, num_tasks, priority, nogroup,
+    taskyield, data, map, update, to, from,
+    enter, exit, defaultmap, teams, num_teams,
+    flush, source, sink,
+  },
+  basicstyle=\ttfamily\footnotesize,
+  escapechar=|,
+  breakatwhitespace=false,
+  breaklines=true,
+  frame=none,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=C++,
 }
 
 \lstdefinestyle{FortStyle}{
-    %backgroundcolor=\color{backgroundColour},
-    commentstyle=\color{mGreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{mGray},
-    stringstyle=\color{mPurple},
-    basicstyle=\scriptsize,
-    breakatwhitespace=false,
-    breaklines=true,
-    captionpos=b,
-    keepspaces=true,
-    numbers=left,
-    numbersep=5pt,
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
-    tabsize=2,
-    language=[90]Fortran
+%backgroundcolor=\color{backgroundColour},
+  commentstyle=\color{mGreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{mGray},
+  stringstyle=\color{mPurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  frame=none,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=[90]Fortran,
+  escapechar=|,
 }
 
 \lstdefinestyle{ompStyle}{
-         language=c++,
-         basicstyle=\small,
-         numbers=none,
-         numberstyle=\footnotesize,
-         numbersep=5pt,
-         backgroundcolor=\color{white},
-         showspaces=false,
-         showstringspaces=false,
-         showtabs=false,
-         frame=single,
-         tabsize=4,
-         breaklines=true,
-         columns=fullflexible,
-         breakautoindent=false,
-         framerule=0pt,
-         xleftmargin=0pt,
-         xrightmargin=0pt,
-         breakindent=0pt,
-         resetmargins=true,
-         morekeywords={pragma,omp,parallel,sections,section,single,master,critical,atomic,simd,device},
-         escapeinside={(*}{*)},
-    }
-
-\lstset{
-    inputencoding=utf8,
-%    backgroundcolor=\color{white},
-    tabsize=4,
-    rulecolor=,
-    upquote=true,
-%    aboveskip={1.5\baselineskip},
-    columns=fixed,
-    showstringspaces=false,
-    extendedchars=true,
-    breaklines=true,
-    prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
-    frame=single,
-    showtabs=false,
-    showspaces=false,
-    showstringspaces=false,
-    basicstyle=\scriptsize\ttfamily,
-    identifierstyle=\ttfamily,
-    keywordstyle=\ttfamily\color[rgb]{0,0,1},
-    commentstyle=\ttfamily\color[rgb]{0.133,0.545,0.133},
-    stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941},
+  language=c++,
+  commentstyle=\color{mGreen},
+  basicstyle=\ttfamily\footnotesize,
+  numbers=none,
+  numberstyle=\tiny\color{mGray},
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  captionpos=b,
+  tabsize=4,
+  breaklines=true,
+  columns=fullflexible,
+  breakautoindent=false,
+  resetmargins=true,
+  morekeywords={
+    pragma, omp, parallel, workshare,
+    sections, section, single,
+    master, critical, atomic, simd,
+    device, shared, private, copyprivate,
+    firstprivate, lastprivate, public,
+    threadprivate, reduction, ordered,
+    dynamic, runtime, guided, monotonic,
+    nonmonotonic, target, distribute,
+    num_threads, default, copyin, copyprivate,
+    nowait, collapse, schedule, linear,
+    aligned, safelen, simdlen, declare,
+    task, taskloop, taskgroup, taskwait,
+    final, untied, mergeable, depend,
+    grainsize, num_tasks, priority, nogroup,
+    taskyield, data, map, update, to, from,
+    enter, exit, defaultmap, teams, num_teams,
+    flush, source, sink,
+  },
+  escapeinside={(*}{*)},
 }
 
 \makeatletter
@@ -223,9 +247,9 @@
     addrspace, section, alias, sideeffect, c, gc,
     target, datalayout, triple,
     blockaddress
-    blockaddress
   },
-  classoffset=1, keywordstyle=\color{purple},
+  classoffset=1,
+  keywordstyle=\color{purple},
   morekeywords={
     fadd, sub, fsub, mul, fmul,
     sdiv, udiv, fdiv, srem, urem, frem,
@@ -248,3 +272,4 @@
   keywordsprefix={\%},
 }
 \makeatother
+%% End Listing styles

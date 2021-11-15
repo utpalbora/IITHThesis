@@ -1,0 +1,29 @@
+\documentclass[department=cse,degree=phd,book=synopsis,backref=page]{iiththesis}
+\title{Title of your thesis}
+\submitted{\today}
+\author{Authorname}
+\rollno{IITH Rollno}
+\adviser{Dr. ABC}
+\addradviser{Dept. of \department}
+\coguide{Dr. XYZ}
+\addrcoguide{Dept. of \department}
+
+
+\usepackage{import}
+\import{common/}{preamble}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\bibname}{References}
+\begin{document}
+
+%% Synopsis Begin
+
+%% Synopsis End
+
+\clearpage
+\newpage
+\bibliographystyle{iiththesis}
+\bibliography{common/references}
+
+\end{document}

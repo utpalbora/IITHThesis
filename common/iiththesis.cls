@@ -28,6 +28,7 @@
 \def\@submittedmonth{\ifnum\month>10 January\else\ifnum\month>8 November
   \else\ifnum\month>6 September\else May\fi\fi\fi}
 \def\adviser#1{\gdef\@adviser{#1}}
+\def\adviserdesig#1{\gdef\@adviserdesig{#1}}
 \def\addradviser#1{\gdef\@addradviser{#1}}
 \def\chair#1{\gdef\@chair{#1}}
 \def\addrchair#1{\gdef\@addrchair{#1}}
@@ -36,9 +37,17 @@
 \def\internal#1{\gdef\@internal{#1}}
 \def\addrinternal#1{\gdef\@addrinternal{#1}}
 \def\coguide#1{\gdef\@coguide{#1}}
+\def\coguidedesig#1{\gdef\@coguidedesig{#1}}
 \def\addrcoguide#1{\gdef\@addrcoguide{#1}}
 \def\rollno#1{\gdef\@rollno{#1}}
-\long\def\@abstract{\@latex@error{No \noexpand\abstract given}\@ehc}
+\long\def\@abstract{}
+%\long\def\@abstract{\@latex@error{No \noexpand\abstract given}\@ehc}
+\newif\ifIITH@synopsis
+\IITH@synopsisfalse %default false
+\newif\ifIITH@proposal
+\IITH@proposalfalse
+\newif\ifIITH@thesis
+\IITH@thesisfalse
 
 \newcommand*{\iith}{IIT Hyderabad}
 \newcommand*{\iithfull}{Indian Institute of Technology Hyderabad}
@@ -48,24 +57,29 @@
 \newcommand*{\makelot}{}
 \newcommand*{\makelof}{}
 \newcommand*{\makelos}{}
+\newcommand*{\makelol}{}
 \newcommand*{\begincmd}{
   \doublespacing
   \frontmatter
   \maketitlepage
 %\makecopyrightpage
-  \makedeclarepage
-  \makecertificate
-  \makeacknowledgements
-  \makededication
-  \makeabstract
-  \tableofcontents
-  \clearpage
+  \ifIITH@thesis
+    \makedeclarepage
+    \makecertificate
+    \makeacknowledgements
+    \makededication
+    \makeabstract
+    \tableofcontents
+    \clearpage
+  \fi
   %\phantomsection\addcontentsline{toc}{chapter}{Nomenclature}
   \makelot
   \clearpage
   \makelof
   \clearpage
   \makeloa
+  \clearpage
+  \makelol
   \clearpage
   \makelos
   \clearpage\mainmatter
@@ -145,9 +159,16 @@ btech, bdes, mtech, mdes, msc, mds, mphil, phd}[phd]{%
 }
 
 \define@choicekey*+{\@classname.cls}{book}[\val\position]{%
-thesis, report, techreport}[thesis]{%
+thesis, synopsis, proposal, report, techreport}[thesis]{%
   \ifcase\position\relax %thesis
     \newcommand{\@book}{Thesis}%
+    \IITH@thesistrue
+  \or %synopsis
+    \newcommand{\@book}{Synopsis}%
+    \IITH@synopsistrue
+  \or %proposal
+    \newcommand{\@book}{Research Proposal}%
+    \IITH@proposaltrue
   \or %report
     \newcommand{\@book}{Report}%
   \or %techreport
@@ -155,7 +176,7 @@ thesis, report, techreport}[thesis]{%
   \fi
 }{%
   \ClassError{\@classname}{The option book must be one of
-  thesis, report, techreport}
+  thesis, synopsis, proposal, report, techreport}
 }
 \presetkeys{\@classname.cls}{department}{}
 \presetkeys{\@classname.cls}{degree}{}
@@ -175,7 +196,11 @@ thesis, report, techreport}[thesis]{%
   \begin{center}
     \@author
   \end{center}
-  \vspace{.3in}
+  \ifIITH@synopsis
+    \vspace{.1in}
+  \else
+    \vspace{.3in}
+  \fi
   \begin{center}
     A \@book ~Submitted to \\
     \iithfull\ \\
@@ -210,23 +235,54 @@ thesis, report, techreport}[thesis]{%
       \fi
     \end{tikzpicture}
   \end{center}
-  \vspace{.3in}
+  \ifIITH@synopsis
+  \else
+    \vspace{.3in}
+  \fi
   \begin{center}
     \@deptpref  ~\department \\
-  \vspace{.3in}
   \end{center}
-
-  \vspace{.3in}
-  \begin{center}
-    \@submitted
-  \end{center}
-  \vspace*{.5in}
-  \begin{center}
-  \begin{small}
-    {\bf \copyright{ }\the\year{} by \@author} \\
-    {\bf All rights reserved}
-  \end{small}
-  \end{center}
+  \ifIITH@synopsis
+  \else
+    \vspace{.3in}
+  \fi
+  \ifIITH@synopsis
+    \begin{center}
+%% Guide
+      Advisor:~\@adviser \\
+      \ifx\@adviserdesig\undefined
+      \else
+        \@adviserdesig \\
+      \fi
+      \@addradviser \\
+%% End of guide
+%% Co-Guide
+      \ifx\@coguide\undefined
+      \else
+        \vspace{1em}
+        Co-Advisor:~\@coguide \\
+        \ifx\@coguidedesig\undefined
+        \else
+          \@coguidedesig \\
+        \fi
+        \@addrcoguide \\
+      \fi
+      \vspace{.4in}
+      \@submitted
+    \end{center}
+%% End of co-guide
+  \else
+    \begin{center}
+      \@submitted
+    \end{center}
+    \vspace*{.4in}
+    \begin{center}
+      \begin{small}
+        {\bf \copyright{ }\the\year{} by \@author} \\
+        {\bf All rights reserved}
+      \end{small}
+    \end{center}
+  \fi
   \hypersetup{%
     pdfauthor={\@author},
     pdftitle={\@title},
@@ -379,13 +435,16 @@ thesis, report, techreport}[thesis]{%
 }
 
 \newcommand*{\makeabstract}{
-  \newpage
+  \ifx\@abstract\undefined
+  \else
+    \newpage
   %\phantomsection\addcontentsline{toc}{section}{Abstract}
-  \begin{center}
-    \Large \textbf{Abstract}
-  \end{center}
-  \@abstract
-  \clearpage
+    \begin{center}
+      \Large \textbf{Abstract}
+    \end{center}
+    \@abstract
+    \clearpage
+  \fi
 }
 
 \DeclareOption{myorder}{
@@ -396,6 +455,14 @@ thesis, report, techreport}[thesis]{%
     \phantomsection\addcontentsline{toc}{section}{List of Figures}\listoffigures}}
 \DeclareOption{loa}{\renewcommand*{\makeloa}{
     \phantomsection\addcontentsline{toc}{section}{List of Algorithms}\listofalgorithms}}
+\DeclareOption{lol}{
+  \renewcommand*{\makelol}{
+    \RequirePackage{listings}
+    %\renewcommand{\lstlistlistingname}{List of Listings}
+    \phantomsection\addcontentsline{toc}{section}{\lstlistlistingname}
+    \lstlistoflistings
+  }
+}
 \DeclareOption{los}{
   \renewcommand*{\makelos}{
     \RequirePackage[english]{nomencl}
