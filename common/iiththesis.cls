@@ -48,11 +48,27 @@
 \IITH@proposalfalse
 \newif\ifIITH@thesis
 \IITH@thesisfalse
+\newif\ifIITH@singlespacing
+\IITH@singlespacingfalse
+\newif\ifIITH@onehalfspacing
+\IITH@onehalfspacingfalse
+\newif\ifIITH@doublespacing
+\IITH@doublespacingfalse
 
 \newcommand*{\iith}{IIT Hyderabad}
 \newcommand*{\iithfull}{Indian Institute of Technology Hyderabad}
 \newcommand*{\frontmatter}{\pagenumbering{roman}}
-\newcommand*{\mainmatter}{\pagenumbering{arabic}}
+\newcommand*{\mainmatter}{
+  \ifIITH@doublespacing
+    \doublespacing
+  \else\ifIITH@singlespacing
+    \singlespacing
+  \else
+    \onehalfspacing
+  \fi
+  \fi
+  \pagenumbering{arabic}
+}
 \newcommand*{\makeloa}{}
 \newcommand*{\makelot}{}
 \newcommand*{\makelof}{}
@@ -178,9 +194,23 @@ thesis, synopsis, proposal, report, techreport}[thesis]{%
   \ClassError{\@classname}{The option book must be one of
   thesis, synopsis, proposal, report, techreport}
 }
+\define@choicekey*+{\@classname.cls}{spacing}[\val\position]{%
+single,onehalf,double}[onehalf]{%
+  \ifcase\position\relax %single
+    \IITH@singlespacingtrue
+  \or %onehalf
+    \IITH@onehalfspacingtrue
+  \or %double
+    \IITH@doublespacingtrue
+  \fi
+}{%
+  \ClassError{\@classname}{The option spacing must be one of
+  single, onehalf, double}
+}
 \presetkeys{\@classname.cls}{department}{}
 \presetkeys{\@classname.cls}{degree}{}
 \presetkeys{\@classname.cls}{book}{}
+\presetkeys{\@classname.cls}{spacing}{}
 \ProcessOptionsX<\@classname.cls>
 
 \newcommand{\maketitlepage}{{
@@ -447,8 +477,6 @@ thesis, synopsis, proposal, report, techreport}[thesis]{%
   \fi
 }
 
-\DeclareOption{myorder}{
-  \renewcommand*{\begincmd}{\doublespacing}}
 \DeclareOption{lot}{\renewcommand*{\makelot}{
     \phantomsection\addcontentsline{toc}{section}{List of Tables}\listoftables}}
 \DeclareOption{lof}{\renewcommand*{\makelof}{
