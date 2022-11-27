@@ -20,6 +20,7 @@
 \RequirePackage{tikz}
 \RequirePackage{ifxetex}
 \RequirePackage{xkeyval}
+\RequirePackage{pdfpages}
 \newcounter{subyear}
 \setcounter{subyear}{\number\year}
 \def\submitted#1{\gdef\@submitted{#1}}
@@ -34,8 +35,12 @@
 \def\addrchair#1{\gdef\@addrchair{#1}}
 \def\external#1{\gdef\@external{#1}}
 \def\addrexternal#1{\gdef\@addrexternal{#1}}
+\def\externalsecond#1{\gdef\@externalsecond{#1}}
+\def\addrexternalsecond#1{\gdef\@addrexternalsecond{#1}}
 \def\internal#1{\gdef\@internal{#1}}
 \def\addrinternal#1{\gdef\@addrinternal{#1}}
+\def\internalsecond#1{\gdef\@internalsecond{#1}}
+\def\addrinternalsecond#1{\gdef\@addrinternalsecond{#1}}
 \def\coguide#1{\gdef\@coguide{#1}}
 \def\coguidedesig#1{\gdef\@coguidedesig{#1}}
 \def\addrcoguide#1{\gdef\@addrcoguide{#1}}
@@ -54,6 +59,8 @@
 \IITH@onehalfspacingfalse
 \newif\ifIITH@doublespacing
 \IITH@doublespacingfalse
+\newif\ifIITH@thesisfinal
+\IITH@thesisfinalfalse
 
 \newcommand*{\iith}{IIT Hyderabad}
 \newcommand*{\iithfull}{Indian Institute of Technology Hyderabad}
@@ -80,8 +87,14 @@
   \maketitlepage
 %\makecopyrightpage
   \ifIITH@thesis
-    \makedeclarepage
-    \makecertificate
+    \ifIITH@thesisfinal
+      \includepdf[pages={1}]{declaration.pdf}
+      \includepdf[pages={1}]{approval.pdf}
+      \onehalfspacing
+    \else
+      \makedeclarepage
+      \makecertificate
+    \fi
     \makeacknowledgements
     \makededication
     \makeabstract
@@ -379,15 +392,25 @@ single,onehalf,double}[onehalf]{%
     {\Large Approval Sheet}
   \end{center}
 
-  This \@book ~entitled \textbf{\@title} by \@author ~is approved for the degree of \@degree ~from \iith.
+  This \MakeLowercase{\@book} entitled \textbf{\@title} by \@author ~is approved for the degree of \@degree ~from \iith.
 
   \ifx\@external\undefined
   \else
-    \vspace*{0.2in}
+    \vspace*{0.3in}
     \begin{flushright}
       --------------------------\\
       (\@external) Examiner \\
       \@addrexternal\\
+    \end{flushright}
+  \fi
+
+  \ifx\@externalsecond\undefined
+  \else
+    \vspace*{0.2in}
+    \begin{flushright}
+      --------------------------\\
+      (\@externalsecond) Examiner \\
+      \@addrexternalsecond\\
     \end{flushright}
   \fi
 
@@ -396,8 +419,18 @@ single,onehalf,double}[onehalf]{%
     \vspace*{0.2in}
     \begin{flushright}
       --------------------------\\
-      (\@internal) Examiner \\
+      (\@internal) Internal Examiner \\
       \@addrinternal\\
+    \end{flushright}
+  \fi
+
+  \ifx\@internalsecond\undefined
+  \else
+    \vspace*{0.2in}
+    \begin{flushright}
+      --------------------------\\
+      (\@internalsecond) Internal Examiner \\
+      \@addrinternalsecond\\
     \end{flushright}
   \fi
 
@@ -408,7 +441,6 @@ single,onehalf,double}[onehalf]{%
     (\@adviser) Adviser \\
     \@addradviser
   \end{flushright}
-  \vspace*{0.2in}
 %% End of guide
 
 %% Co-Guide
@@ -502,6 +534,7 @@ single,onehalf,double}[onehalf]{%
   }
 }
 
+\DeclareOption{final}{\IITH@thesisfinaltrue}
 \DeclareOption{twocolumn}{\OptionNotUsed}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
 \ProcessOptions

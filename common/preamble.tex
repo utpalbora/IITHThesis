@@ -7,6 +7,7 @@
 \usepackage{amsmath,array,booktabs,caption,fancyvrb,graphicx,tabularx}
 %% acmart already includes amsmath,array,booktabs,caption,fancyvrb,graphicx,hypdoc,libertine,longtable,newtxmath,tabularx,zi4,
 \usepackage{mathtools} %% Extension to amsmath
+\usepackage{stmaryrd} %% Additional math symbols for CS
 \captionsetup[table]{position=top}
 \captionsetup[figure]{position=bottom}
 \usepackage{multirow} %% Cell spanning multiple rows
@@ -61,8 +62,10 @@
 \usepackage{float}
 %\restylefloat{table}
 %\usepackage{stfloats} %% better positioning of floats in 2-column documents
-%\usepackage{subcaption} %% captions for subfigures
-\usepackage{subfig} %% does not work properly with hyperref, prefer subcaption
+\usepackage[hypcap=true]{subcaption} %% captions for subfigures
+\captionsetup[subtable]{position=below}
+\captionsetup[subfigure]{position=below}
+%\usepackage{subfig} %% does not work properly with hyperref, prefer subcaption
 
 %% Uncomment for IEEETran
 %\newtheorem{definition}{Definition}
@@ -71,6 +74,12 @@
 %% appendix with toc support
 %% Provides appendix command and appendices environment
 \usepackage[titletoc,toc,page,header]{appendix}
+
+%% Use this package to extract declaration page and approval sheet
+%%\usepackage[2]{pagesel} %% Extract selected pages
+
+\widowpenalty10000
+\clubpenalty10000
 
 %% Custom commands for referencing
 \import{}{refs.tex}
