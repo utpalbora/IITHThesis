@@ -94,6 +94,9 @@
 \newcommand{\fixme}[2][]{\textcolor{red}{\textbf{ToDo:}\ifthenelse{\isempty{#1}{}}{}{#1--}#2}}
 \newcommand\redsout{\bgroup\markoverwith{\textcolor{orange}{\rule[0.5ex]{2pt}{1pt}}}\ULon} %needs ulem
 \newcommand{\suggest}[2]{\redsout{#2}\textcolor{orange}{\textit{#1}}}
+%\newcommand{\revchng}[2]{{\leavevmode\color{blue}#2}} % Highlight new text in blue
+\newcommand{\revchng}[2]{\redsout{#1}{\leavevmode\color{blue}#2}} % Strike out old text and highlight new text in blue
+%\newcommand{\revchng}[2]{#2} % for final version use this
 %% Review comment commands end
 
 %% Custom commands
